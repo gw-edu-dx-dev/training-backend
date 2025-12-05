@@ -19,4 +19,5 @@ public class HelloController {
     public String greeting(@RequestParam("name") String name){
         return "こんにちは、" + name + "さん";
     }
+    
 }
