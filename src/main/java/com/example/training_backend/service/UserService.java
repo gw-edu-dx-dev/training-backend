@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.training_backend.Entity.User;
 import com.example.training_backend.dto.CreateUserRequest;
 import com.example.training_backend.dto.UserDto;
-import com.example.training_backend.reository.UserRepository;
+import com.example.training_backend.entity.User;
+import com.example.training_backend.repository.UserRepository;
 
 @Service
 public class UserService {
@@ -22,10 +22,8 @@ public class UserService {
 
     // ユーザー一覧取得
     public List<UserDto> getAllUsers(){
-        List<User> users = userRepository.findAll();
-        
-        // EntityをDTOに変換
-        return users.stream()
+        // StreamAPI
+        return userRepository.findAll().stream()
             .map(user -> new UserDto(user.getId(), user.getName(), user.getEmail()))
             .toList();
     }
@@ -33,7 +31,7 @@ public class UserService {
     // ユーザー新規登録
     public UserDto createUser(CreateUserRequest request){
         // DtoをEntityに変換
-        User user = new User(request.getName(), request.getEmail());
+        User user = new User(request.getName(), request.getEmail(), request.getPassword());
         User saved = userRepository.save(user);
 
         // 保存されたEntityからDTOを作成して返す

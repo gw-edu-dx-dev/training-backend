@@ -3,24 +3,33 @@ package com.example.training_backend.dto;
 public class CreateUserRequest {
     private String name;
     private String email;
+    private String password;
+    private Long id;
+    
 
     public CreateUserRequest(){}
 
-    public String getName() {
-        return name;
+    public CreateUserRequest(Long id,String name,String email,String password){
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getName() {
+        return name;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public Long getId(){
+        return id;
     }
 
+    public String getPassword(){
+        return password;
+    }
     
 }

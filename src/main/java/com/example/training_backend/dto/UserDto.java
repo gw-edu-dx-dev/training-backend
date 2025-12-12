@@ -30,7 +30,5 @@ public class UserDto {
     public String getEmail() {
         return email;
     }
-
-    
     
 }
