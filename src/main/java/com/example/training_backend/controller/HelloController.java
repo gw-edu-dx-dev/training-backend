@@ -1,5 +1,6 @@
 package com.example.training_backend.controller;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,8 +12,8 @@ import com.example.training_backend.dto.NameRequest;
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:5173/")
 public class HelloController {
-    @PostMapping("/hello")
-    public void receiveName(@RequestBody NameRequest request) {
-        System.out.println("こんにちは、" + request.getName() + "さん");
-    }
+    @GetMapping("/hello")
+    public String sayHello(@RequestParam(value = "name", defaultValue = "Guest") String name) {
+        return "こんにちは" + name + "さん";
+    }    
 }
