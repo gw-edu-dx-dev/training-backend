@@ -4,6 +4,7 @@ public class UserDTO{
     private Long id;
     private String name;
     private String email;
+    private String password;
 
     //引数なし
     public UserDTO(){
@@ -11,10 +12,11 @@ public class UserDTO{
     }
 
     //コンストラクタ, getter, setter
-    public UserDTO(Long id, String name, String email){
+    public UserDTO(Long id, String name, String email, String password){
     this.id = id;
     this.name = name;
     this.email = email;
+    this.password = password;
     }
 
     public Long getId(){
@@ -27,6 +29,10 @@ public class UserDTO{
 
     public String getEmail(){
         return email;
+    }
+
+    public String getPassword(){
+        return password;
     }
 
 }

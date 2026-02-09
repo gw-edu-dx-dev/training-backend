@@ -4,35 +4,45 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.example.training_backend.dto.UserDTO;
-import com.example.training_backend.entity.UserEntity; // Entityをインポート
-import com.example.training_backend.repository.UserRepository; // Repositoryをインポート
+import com.example.training_backend.dto.LoginRequest; 
+import com.example.training_backend.entity.UserEntity;
+import com.example.training_backend.repository.UserRepository;
 
+//ユーザー関連のAPIを提供するコントローラー
 @RestController
 @RequestMapping("/api/users")
 @CrossOrigin(origins = "http://localhost:5173")
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository; // データベース操作用のツールを注入
+    private UserRepository userRepository;
 
-    // Training 5: データベースから全ユーザーを取得
+    //全ユーザー一覧を取得するAPI
     @GetMapping
     public List<UserEntity> getUsers() {
-        return userRepository.findAll(); // SQLを書かなくても自動で全件取得してくれます
+        return userRepository.findAll();
     }
 
-    // Training 5: 新しいユーザーをデータベースに保存
+    //新規ユーザーを登録するAPI
     @PostMapping
     public String createUser(@RequestBody UserDTO userDto) {
-        // DTOからEntityにデータを詰め替える
         UserEntity user = new UserEntity();
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
-
-        // データベースに保存
+        user.setPassword(userDto.getPassword());
         userRepository.save(user);
-
-        System.out.println("DBに保存しました: " + user.getName());
         return "ユーザー 「" + user.getName() + "」 をDBに登録しました！";
     }
-}
+
+    //ログイン認証用API
+    @PostMapping("/login")
+    public String login(@RequestBody LoginRequest loginRequest) {
+        //ユーザーIDとパスワードが一致するユーザーを検索
+        return userRepository.findAll().stream()
+            .filter(user -> user.getName().equals(loginRequest.getUserId()) 
+            && user.getPassword().equals(loginRequest.getPassword()))
+            .findFirst()
+            .map(user -> "OK") 
+            .orElse("NG");
+    }
+} 
