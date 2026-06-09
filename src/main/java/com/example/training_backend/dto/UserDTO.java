@@ -15,7 +15,7 @@ public UserDTO(Long id, String name, String email) {
     this.name = name;
     this.email = email;
 }
-//ゲッター
+//ゲッター,セッター
 public Long getId() {
     return id;
 }
